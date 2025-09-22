@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "button.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +46,6 @@ TIM_HandleTypeDef htim4;
 /* USER CODE BEGIN PV */
 uint32_t i;
 volatile uint8_t leds = 5;
-uint8_t numeroDeLeds = 5;
 volatile uint16_t addCounter = 1030;
 /* USER CODE END PV */
 
@@ -103,13 +103,23 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  	  if (button_release(GPIOB, GPIO_PIN_12, 0) && (htim4.Init.Period < 65535 - addCounter))
+	  //printf("%i", addCounter);
+	  //HAL_Delay(1000);
+	  	  if (button_release(GPIOB, GPIO_PIN_12, 1) && (addCounter <= 65535 - 1030))
 	  	    {
-	  	      htim4.Init.Period += addCounter;
-	  	    } else if (button_release(GPIOB, GPIO_PIN_13, 0) && (htim4.Init.Period > addCounter)){
-	  	      htim4.Init.Period -= addCounter;
+	  		  addCounter = addCounter + 1030;
+	  		  TIM4->ARR = addCounter;
+	  		  TIM4->EGR = TIM_EGR_UG;
+	  		  printf("pressed 1");
+	  	    } else if (button_release(GPIOB, GPIO_PIN_13, 1) && (addCounter > 1030)){
+	  	    	addCounter = addCounter - 1030;
+	  	    	TIM4->ARR = addCounter;
+	  	    	TIM4->EGR = TIM_EGR_UG;
+	  	    	printf("pressed 2");
 	  	    }
+
 	  	    HAL_Delay(200);
+	  	    //TIM4->ARR = addCounter;
 	  	    // pisca o led da placa
 	  	    HAL_GPIO_TogglePin(LED_KIT_GPIO_Port, LED_KIT_Pin);
   }
@@ -136,7 +146,12 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLM = 16;
+  RCC_OscInitStruct.PLL.PLLN = 192;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -146,12 +161,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
   {
     Error_Handler();
   }
@@ -177,7 +192,7 @@ static void MX_TIM4_Init(void)
   /* USER CODE END TIM4_Init 1 */
   htim4.Instance = TIM4;
   htim4.Init.Prescaler = 9600-1;
-  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP; 
   htim4.Init.Period = 1030;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -255,11 +270,14 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef * htim4){
 
+void HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef * htim4){
+	//HAL_GPIO_TogglePin(GPIOA,3);
     leds = (leds - 1) & 0x1F;
-    HAL_GPIO_WritePin(GPIOA, (~leds)>>3, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOA, leds>>3, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, (~leds)<<3, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOA, leds<<3, GPIO_PIN_SET);
+    //Teste de led
+    //HAL_GPIO_WritePin(GPIOA,4,1);
 
  }
 /* USER CODE END 4 */
