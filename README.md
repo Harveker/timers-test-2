@@ -16,7 +16,7 @@ Este projeto demonstra como controlar dinamicamente o período de um timer de ha
 
 * Placa de desenvolvimento STM32 Blackpill (STM32F401, STM32F411, ou similar).
 * 5x LEDs (da cor de sua preferência).
-* 5x Resistores de limitação de corrente para os LEDs (ex: 220Ω ou 330Ω).
+* 5x Resistores de limitação de corrente para os LEDs (ex: 220Ω, 330Ω, 1000Ω).
 * 2x Botões de pressão (push buttons).
 * 1x Protoboard (placa de ensaio).
 * Fios Jumper para as conexões.
