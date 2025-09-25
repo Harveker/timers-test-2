@@ -108,14 +108,14 @@ int main(void)
 	  	  if (button_release(GPIOB, GPIO_PIN_12, 1) && (addCounter <= 65535 - 1030))
 	  	    {
 	  		  addCounter = addCounter + 1030;
-	  		  TIM4->ARR = addCounter;
-	  		  TIM4->EGR = TIM_EGR_UG;
-	  		  printf("pressed 1");
+          MX_TIM4_Init();
+	  		  //TIM4->ARR = addCounter;
+	  		  //TIM4->EGR = TIM_EGR_UG;
 	  	    } else if (button_release(GPIOB, GPIO_PIN_13, 1) && (addCounter > 1030)){
 	  	    	addCounter = addCounter - 1030;
-	  	    	TIM4->ARR = addCounter;
-	  	    	TIM4->EGR = TIM_EGR_UG;
-	  	    	printf("pressed 2");
+            MX_TIM4_Init();
+	  	    	//TIM4->ARR = addCounter;
+	  	    	//TIM4->EGR = TIM_EGR_UG;
 	  	    }
 
 	  	    HAL_Delay(200);
@@ -180,7 +180,7 @@ void SystemClock_Config(void)
 static void MX_TIM4_Init(void)
 {
 
-  /* USER CODE BEGIN TIM4_Init 0 */
+  /* USER CODE BEGIN TIM7_Init 0 */
 
   /* USER CODE END TIM4_Init 0 */
 
@@ -192,8 +192,8 @@ static void MX_TIM4_Init(void)
   /* USER CODE END TIM4_Init 1 */
   htim4.Instance = TIM4;
   htim4.Init.Prescaler = 9600-1;
-  htim4.Init.CounterMode = TIM_COUNTERMODE_UP; 
-  htim4.Init.Period = 1030;
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.Period = addCounter;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
@@ -271,13 +271,16 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef * htim4){
-	//HAL_GPIO_TogglePin(GPIOA,3);
+void HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef * htim){
+	if(htim==&htim4)
+  {
+  //HAL_GPIO_TogglePin(GPIOA,3);
     leds = (leds - 1) & 0x1F;
     HAL_GPIO_WritePin(GPIOA, (~leds)<<3, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, leds<<3, GPIO_PIN_SET);
     //Teste de led
     //HAL_GPIO_WritePin(GPIOA,4,1);
+  }
 
  }
 /* USER CODE END 4 */
