@@ -47,16 +47,13 @@ If you discover a security vulnerability in this project, please report it respo
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
-| Latest  | :white_check_mark: |
-| Older   | :x:                |
+This project follows a rolling release model. Only the latest version on the main branch receives security updates.
 
 ## Privacy Protection
 
 This repository follows privacy-first principles:
 - No personal identifying information (PII) should be committed
-- GitHub provides anonymized email addresses (noreply@github.com) - use them
+- GitHub provides anonymized email addresses (`username@users.noreply.github.com` or `ID+username@users.noreply.github.com`) - use them for commits
 - IDE configuration files containing personal paths are gitignored
 
 ## Secure Development Checklist

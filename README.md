@@ -85,5 +85,5 @@ Este projeto segue práticas de segurança recomendadas:
 Antes de contribuir, certifique-se de:
 - Nunca fazer commit de credenciais ou informações sensíveis
 - Revisar seus commits com `git diff` antes de enviar
-- Usar o email anônimo do GitHub (noreply) para privacidade
+- Usar o email anônimo do GitHub (`username@users.noreply.github.com`) para privacidade
 - Seguir as diretrizes de segurança em [SECURITY.md](SECURITY.md)
