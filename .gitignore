@@ -1,0 +1,83 @@
+# STM32 and embedded development
+
+# Build artifacts
+build/
+*.o
+*.elf
+*.hex
+*.bin
+*.map
+*.list
+*.lst
+*.su
+*.d
+
+# IDE files - STM32CubeIDE / Eclipse
+.metadata/
+.settings/
+.project
+.cproject
+.mxproject
+*.launch
+
+# Debug files
+Debug/
+Release/
+*.dfu
+
+# Compilation
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.exe
+*.out
+*.app
+
+# Temporary files
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Personal/IDE specific
+.vscode/
+.idea/
+*.iml
+
+# Credentials and secrets
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.txt
+credentials.txt
+.env
+.env.local
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# macOS
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Desktop.ini
+ehthumbs.db
+
+# Linux
+*~
+.fuse_hidden*
+.Trash-*
+.nfs*
