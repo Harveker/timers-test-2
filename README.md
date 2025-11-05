@@ -70,3 +70,20 @@ Dentro da função de interrupção `HAL_TIM_PeriodElapsedCallback`, a seguinte 
 4.  **Conecte** a Blackpill ao computador através do programador ST-Link.
 5.  **Faça o upload** do firmware para a placa (atalho `F11` para depurar/executar).
 6.  **Pressione os botões** para ver a velocidade da contagem nos LEDs mudar. O botão em PB12 deixará a contagem mais lenta, e o botão em PB13 a deixará mais rápida.
+
+## 🔒 Segurança e Privacidade
+
+Este projeto segue práticas de segurança recomendadas:
+
+* **.gitignore configurado:** Arquivos de IDE, binários de build e informações pessoais são automaticamente excluídos do controle de versão.
+* **Política de Segurança:** Consulte [SECURITY.md](SECURITY.md) para diretrizes sobre segurança, relatório de vulnerabilidades e melhores práticas.
+* **Sem dados pessoais:** O código não contém informações pessoais identificáveis (PII), credenciais ou chaves privadas.
+* **Código limpo:** Todo código segue práticas seguras de programação para sistemas embarcados.
+
+### Para Contribuidores
+
+Antes de contribuir, certifique-se de:
+- Nunca fazer commit de credenciais ou informações sensíveis
+- Revisar seus commits com `git diff` antes de enviar
+- Usar o email anônimo do GitHub (`username@users.noreply.github.com`) para privacidade
+- Seguir as diretrizes de segurança em [SECURITY.md](SECURITY.md)
